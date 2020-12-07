@@ -12,6 +12,8 @@ I build an API server, that provides data for the City Explorer Application. It 
 
 ## Change Log
 
+
+
 ## Credits and Collaborations
 
 ## Observations and Reflections
@@ -22,6 +24,18 @@ I build an API server, that provides data for the City Explorer Application. It 
 
 Estimate of time needed to complete:  45 minutes
 
-Start time: 1:10pm
+Start time: 1:00pm
 
 Finish time: 2:05pm
+
+Actual time needed to complete: 1 hour 5 minutes
+
+**2. Locations: As a user of City Explorer, I want to enter the name of a location so that I can see data about the area of interest to me.**
+
+Estimate of time needed to complete:  1 hour
+
+Start time:
+
+Finish time:
+
+Actual time needed to complete:
