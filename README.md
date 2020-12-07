@@ -12,4 +12,16 @@ I build an API server, that provides data for the City Explorer Application. It 
 
 ## Change Log
 
-# Credits and Collaborations
+## Credits and Collaborations
+
+## Observations and Reflections
+
+### Lab 06 - Node, npm and Express
+
+**1. Repository Set Up**
+
+Estimate of time needed to complete:  45 minutes
+
+Start time: 1:10pm
+
+Finish time: 2:05pm
