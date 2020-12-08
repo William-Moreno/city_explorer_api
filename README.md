@@ -10,11 +10,20 @@ I build an API server, that provides data for the City Explorer Application. It 
 
 ## Architecture
 
+The server is constructed using Node.js
+
 ## Change Log
 
+12-07-2020 2:05pm - Repository set-up completed and initial version of server deployed to Heroku.
+
+12-07-2020 6:45pm - Application now has a fully-functioning express server, with a GET route for the location resource.
+
+12-07-2020 7:45pm - Application now has a fully-functioning express server, with a GET route for the weather resource.
 
 
 ## Credits and Collaborations
+
+Alan Hung and James Gerstenberger assisted with troubleshooting coding errors.
 
 ## Observations and Reflections
 
@@ -45,6 +54,16 @@ Actual time needed to complete: 2 hours 15 minutes
 Estimate of time needed to complete:  45 miuntes
 
 Start time: 7:00pm
+
+Finish time: 7:45pm
+
+Actual time needed to complete: 45 minutes
+
+**4. Errors: As a user, I want clear messages if something goes wrong so I know if I need to make any changes or try again in a different manner.**
+
+Estimate of time needed to complete:  30 minutes
+
+Start time:
 
 Finish time: 
 
