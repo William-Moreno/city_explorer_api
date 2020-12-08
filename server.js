@@ -14,7 +14,7 @@ app.use(cors());
 
 app.get('/location', function(req, res){
   const gpsData = require('./data/location.json');
-  const instanceOfGpsData = new GpsData(gpsData[0]);
+  const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
   res.send(instanceOfGpsData);
 });
@@ -33,11 +33,11 @@ app.get('/weather', function(req, res){
 // callback functions
 
 
-function GpsData(gpsObj){
+function GpsData(gpsObj, query){
   this.latitude = gpsObj.lat;
   this.longitude = gpsObj.lon;
   this.formatted_query = gpsObj.display_name;
-  this.search_query = 'Lynnwood';
+  this.search_query = query;
 }
 
 function WeatherData(weatherObj){
