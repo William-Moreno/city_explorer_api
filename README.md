@@ -34,8 +34,18 @@ Actual time needed to complete: 1 hour 5 minutes
 
 Estimate of time needed to complete:  1 hour
 
-Start time: 2:45pm
+Start time: 4:30pm
 
-Finish time:
+Finish time: 6:45pm
 
-Actual time needed to complete:
+Actual time needed to complete: 2 hours 15 minutes
+
+**3. Weather: As a user, I want to request current weather information so that I can learn more about the typical weather patterns in the location I had entered.**
+
+Estimate of time needed to complete:  45 miuntes
+
+Start time: 7:00pm
+
+Finish time: 
+
+Actual time needed to complete: 
