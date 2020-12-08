@@ -21,15 +21,16 @@ app.get('/location', function(req, res){
     const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
     res.send(instanceOfGpsData);
-  });
+  }).catch(() => console.log('Error'));
 });
 
 app.get('/weather', function(req, res){
   const weatherData = require('./data/weather.json');
-  const weatherArray = weatherData.data.map((daysWeather) => {
-    new WeatherData(daysWeather);
+  const weatherArray = weatherData.data.map(function(daysWeather) {
+    return new WeatherData(daysWeather);
   });
 
+  console.log(weatherArray);
   res.send(weatherArray);
 });
 
