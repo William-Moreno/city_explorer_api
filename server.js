@@ -2,7 +2,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const { response } = require('express');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +16,7 @@ app.get('/location', function(req, res){
   const gpsData = require('./data/location.json');
   const instanceOfGpsData = new GpsData(gpsData[0]);
   res.send(instanceOfGpsData);
+  console.log(instanceOfGpsData);
 });
 
 // app.use(express.static('./public'));
