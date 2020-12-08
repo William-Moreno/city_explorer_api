@@ -26,10 +26,8 @@ app.get('/location', function(req, res){
 
 app.get('/weather', function(req, res){
   const weatherData = require('./data/weather.json');
-  const weatherArray = [];
-  weatherData.data.forEach(day => {
-    const instanceOfWeatherData = new WeatherData(day);
-    weatherArray.push(instanceOfWeatherData);
+  const weatherArray = weatherData.data.map((daysWeather) => {
+    new WeatherData(daysWeather);
   });
 
   res.send(weatherArray);
