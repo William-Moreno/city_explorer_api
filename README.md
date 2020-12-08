@@ -8,6 +8,8 @@ I build an API server, that provides data for the City Explorer Application. It 
 
 ## Getting Started
 
+Open the City Explorer site using https://city-explorer-app-wm.herokuapp.com as the server.
+
 ## Architecture
 
 The server is constructed using Node.js
