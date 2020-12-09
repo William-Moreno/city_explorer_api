@@ -69,7 +69,7 @@ function TrailData(trailObj){
   this.name = trailObj.name;
   this.location = trailObj.location;
   this.length = trailObj.length;
-  this.condition_date = trailObj.conditionDate.slice(0,9);
+  this.condition_date = trailObj.conditionDate.slice(0,10);
   this.condition_time = trailObj.conditionDate.slice(11,18);
   this.conditions = trailObj.conditionStatus;
   this.stars = trailObj.stars;
