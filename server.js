@@ -21,7 +21,7 @@ app.get('/location', function(req, res){
     const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
     res.send(instanceOfGpsData);
-  }).catch(() => console.log('Error'));
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 });
 
 app.get('/weather', function(req, res){
@@ -33,7 +33,7 @@ app.get('/weather', function(req, res){
       return new WeatherData(daysWeather);
     });
     res.send(weatherArray);
-  }).catch(() => console.log('Error'));
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 });
 
 app.get('/trails', function(req, res){
@@ -46,7 +46,7 @@ app.get('/trails', function(req, res){
       return new TrailData(trail);
     });
     res.send(trailArray);
-  }).catch(() => console.log('Error'));
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 });
 
 // callback functions
