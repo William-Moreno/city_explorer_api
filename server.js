@@ -38,11 +38,11 @@ app.get('/weather', function(req, res){
 
 app.get('/trails', function(req, res){
   const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
-  let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=10&key=${TRAIL_API_KEY}`;
-  superagent.get(urlTrail).then(whatComesBack => {
-    const trailData = whatComesBack.body;
+  let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=25&key=${TRAIL_API_KEY}`;
+  superagent.get(urlTrail).then(returnedData => {
+    const trailData = returnedData.body.trails;
     console.log(trailData);
-    const trailArray = trailData.trails.map(function(trail) {
+    const trailArray = trailData.map(function(trail) {
       return new TrailData(trail);
     });
     res.send(trailArray);
@@ -70,7 +70,7 @@ function TrailData(trailObj){
   this.location = trailObj.location;
   this.length = trailObj.length;
   this.condition_date = trailObj.conditionDate.slice(0,10);
-  this.condition_time = trailObj.conditionDate.slice(11,19);
+  this.condition_time = trailObj.conditionDate.slice(11);
   this.conditions = trailObj.conditionStatus;
   this.stars = trailObj.stars;
   this.star_votes = trailObj.starVotes;

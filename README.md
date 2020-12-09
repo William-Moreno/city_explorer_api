@@ -124,3 +124,45 @@ Start time: 4:25pm
 Finish time: 5:15pm 
 
 Actual time needed to complete: 50 minutes
+
+### Lab 08 Persistence with a SQL Database
+
+**1. Database: As a user, I want the application to perform quickly, so that I can search for locations frequently and reliably.**
+
+Estimate of time needed to complete:  45 minutes
+
+Start time: 1:50pm
+
+Finish time:
+
+Actual time needed to complete:
+
+**2. Server: As a user, I want the application to perform quickly so that I can search for locations frequently and reliably.**
+
+Estimate of time needed to complete:
+
+Start time:
+
+Finish time:
+
+Actual time needed to complete:
+
+**3. Deploy: As a user, I want the application to perform quickly so that I can search for locations frequently and reliably.**
+
+Estimate of time needed to complete:
+
+Start time:
+
+Finish time:
+
+Actual time needed to complete:
+
+**4. *STRETCH*: Server: As a user, I want the application to work with recent results, so that I can see info without the app doing unnecessary API calls.**
+
+Estimate of time needed to complete:
+
+Start time:
+
+Finish time:
+
+Actual time needed to complete:
