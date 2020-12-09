@@ -21,7 +21,7 @@ app.get('/location', function(req, res){
     const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
     res.send(instanceOfGpsData);
-  }).catch(() => console.log('Error'));
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 });
 
 app.get('/weather', function(req, res){
@@ -33,10 +33,22 @@ app.get('/weather', function(req, res){
       return new WeatherData(daysWeather);
     });
     res.send(weatherArray);
-  }).catch(() => console.log('Error'));
-
-
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 });
+
+app.get('/trails', function(req, res){
+  const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
+  let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=10&key=${TRAIL_API_KEY}`;
+  superagent.get(urlTrail).then(whatComesBack => {
+    const trailData = whatComesBack.body;
+    console.log(trailData);
+    const trailArray = trailData.trails.map(function(trail) {
+      return new TrailData(trail);
+    });
+    res.send(trailArray);
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
+});
+
 // callback functions
 
 
@@ -50,6 +62,19 @@ function GpsData(gpsObj, query){
 function WeatherData(weatherObj){
   this.time = weatherObj.datetime;
   this.forecast = weatherObj.weather.description;
+}
+
+function TrailData(trailObj){
+  this.trail_url = trailObj.url;
+  this.name = trailObj.name;
+  this.location = trailObj.location;
+  this.length = trailObj.length;
+  this.condition_date = trailObj.conditionDate.slice(0,9);
+  this.condition_time = trailObj.conditionDate.slice(11,18);
+  this.conditions = trailObj.conditionStatus;
+  this.stars = trailObj.stars;
+  this.star_votes = trailObj.starVotes;
+  this.summary = trailObj.summary;
 }
 
 
