@@ -22,10 +22,22 @@ The server is constructed using Node.js
 
 12-07-2020 7:45pm - Application now has a fully-functioning express server, with a GET route for the weather resource.
 
+12-08-2020 2:25pm - The forEach in the weather callback function has be replaced with a map method.
+
+12-08-2020 3:05pm - Geocode API key applied and /location route callback updated for functionality.
+
+12-08-2020 4:10pm - Weather API key applied and /weather route callback updated for functionality.
+
+12-08-2020 5:15pm - /trail route callback created utilizing Trail API key and a new constructor function. It is now functional.
+
+12-08-2020 5:20pm - Function implemented to handle errors from any API calls.
+
 
 ## Credits and Collaborations
 
 Alan Hung and James Gerstenberger assisted with troubleshooting coding errors.
+
+Nick Magruder assisted with setting up Config Vars on Heroku.
 
 ## Observations and Reflections
 
@@ -65,8 +77,50 @@ Actual time needed to complete: 45 minutes
 
 Estimate of time needed to complete:  30 minutes
 
-Start time:
+Start time: 5:15pm
 
-Finish time: 
+Finish time: 5:20pm
 
-Actual time needed to complete: 
+Actual time needed to complete: 5 minutes
+
+### Lab 07 APIs
+
+**1. Data formatting: As a user, I want the application to provide properly formatted data so that I can view similar data for any location I choose.**
+
+Estimate of time needed to complete:  15 minutes
+
+Start time: 2:15pm
+
+Finish time: 2:25pm
+
+Actual time needed to complete: 10 minutes
+
+**2. Locations: As a user, I want to enter the name of a location so that I do not need to look up the latitude and longitude every time I learn about a new location.**
+
+Estimate of time needed to complete:  30 minutes
+
+Start time: 2:30pm
+
+Finish time: 3:05pm
+
+Actual time needed to complete: 35 minutes
+
+**3. Weather: As a user, I want to request current weather information at any location, so that I can learn more about the typical weather patterns in the area of interest.**
+
+Estimate of time needed to complete:  45 miuntes
+
+Start time: 3:30pm
+
+Finish time: 4:10pm
+
+Actual time needed to complete: 40 minutes
+
+**4. Trails: As a user, I want to request information about trails and campgrounds in the area so that users can explore the location.**
+
+Estimate of time needed to complete:  1 hour
+
+Start time: 4:25pm
+
+Finish time: 5:15pm 
+
+Actual time needed to complete: 50 minutes
