@@ -2,10 +2,15 @@
 
 const express = require('express');
 const cors = require('cors');
+const pg = require('pg');
 const superagent = require('superagent');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DATABASE_URL = process.env.DATABASE_URL;
+
+const client = new pg.Client(DATABASE_URL);
+client.on('error', error => console.error(error));
 
 
 // middleware
@@ -83,4 +88,8 @@ app.use('*', (request, response) => {
   response.status(404).send('The route you are looking for has been disconnected. Please try another.');
 });
 
-app.listen(PORT, () => console.log(`Server is up and running on Port: ${PORT}.`));
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server is up and running on Port: ${PORT}.`));
+  })
+  .catch(error => console.error(error));
