@@ -2,10 +2,15 @@
 
 const express = require('express');
 const cors = require('cors');
+const pg = require('pg');
 const superagent = require('superagent');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DATABASE_URL = process.env.DATABASE_URL;
+
+const client = new pg.Client(DATABASE_URL);
+client.on('error', error => console.error(error));
 
 
 // middleware
@@ -14,14 +19,25 @@ app.use(cors());
 // routes
 
 app.get('/location', function(req, res){
-  const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
-  let urlLocation = `https://us1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${req.query.city}&format=json`;
-  superagent.get(urlLocation).then(whatComesBack => {
-    const gpsData = whatComesBack.body;
-    const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
+  client.query('SELECT * FROM location WHERE search_query = $1', [req.query.city])
+    .then(data => {
+      if(data.rowCount > 0){
+        res.send(data.rows[0]);
+      } else {
+        const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
+        let urlLocation = `https://us1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${req.query.city}&format=json`;
+        superagent.get(urlLocation).then(whatComesBack => {
+          const gpsData = whatComesBack.body;
+          const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
-    res.send(instanceOfGpsData);
-  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
+          client.query('INSERT INTO location (search_query, formatted_query, latitude, longitude) VALUES($1, $2, $3, $4)', [req.query.city, instanceOfGpsData.formatted_query, instanceOfGpsData.latitude, instanceOfGpsData.longitude])
+            .then(() =>{
+              res.send(instanceOfGpsData);
+            });
+        }).catch(() => res.status(500).send('Sorry, something went wrong.'));
+
+      }
+    });
 });
 
 app.get('/weather', function(req, res){
@@ -41,7 +57,6 @@ app.get('/trails', function(req, res){
   let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=25&key=${TRAIL_API_KEY}`;
   superagent.get(urlTrail).then(returnedData => {
     const trailData = returnedData.body.trails;
-    console.log(trailData);
     const trailArray = trailData.map(function(trail) {
       return new TrailData(trail);
     });
@@ -83,4 +98,8 @@ app.use('*', (request, response) => {
   response.status(404).send('The route you are looking for has been disconnected. Please try another.');
 });
 
-app.listen(PORT, () => console.log(`Server is up and running on Port: ${PORT}.`));
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server is up and running on Port: ${PORT}.`));
+  })
+  .catch(error => console.error(error));

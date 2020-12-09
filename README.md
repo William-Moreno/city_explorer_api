@@ -133,19 +133,19 @@ Estimate of time needed to complete:  45 minutes
 
 Start time: 1:50pm
 
-Finish time:
+Finish time: 2:50pm
 
-Actual time needed to complete:
+Actual time needed to complete: 1 hour
 
 **2. Server: As a user, I want the application to perform quickly so that I can search for locations frequently and reliably.**
 
-Estimate of time needed to complete:
+Estimate of time needed to complete: 45 minutes
 
-Start time:
+Start time: 2:55pm
 
-Finish time:
+Finish time: 3:30pm
 
-Actual time needed to complete:
+Actual time needed to complete: 35 minutes
 
 **3. Deploy: As a user, I want the application to perform quickly so that I can search for locations frequently and reliably.**
 
