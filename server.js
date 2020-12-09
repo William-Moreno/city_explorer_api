@@ -15,8 +15,8 @@ app.use(cors());
 
 app.get('/location', function(req, res){
   const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
-  let url = `https://us1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${req.query.city}&format=json`;
-  superagent.get(url).then(whatComesBack => {
+  let urlLocation = `https://us1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${req.query.city}&format=json`;
+  superagent.get(urlLocation).then(whatComesBack => {
     const gpsData = whatComesBack.body;
     const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
@@ -25,15 +25,18 @@ app.get('/location', function(req, res){
 });
 
 app.get('/weather', function(req, res){
-  const weatherData = require('./data/weather.json');
-  const weatherArray = weatherData.data.map(function(daysWeather) {
-    return new WeatherData(daysWeather);
-  });
+  const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+  let urlWeather = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${req.query.latitude}&lon=${req.query.longitude}&key=${WEATHER_API_KEY}&days=8`;
+  superagent.get(urlWeather).then(whatComesBack => {
+    const weatherData = whatComesBack.body;
+    const weatherArray = weatherData.data.map(function(daysWeather) {
+      return new WeatherData(daysWeather);
+    });
+    res.send(weatherArray);
+  }).catch(() => console.log('Error'));
 
-  console.log(weatherArray);
-  res.send(weatherArray);
+
 });
-
 // callback functions
 
 
