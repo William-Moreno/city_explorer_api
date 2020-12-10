@@ -4,7 +4,7 @@
 **Version**: 1.0.0
 
 ## Overview
-I build an API server, that provides data for the City Explorer Application. It will allow a user to search for a location, present a map of the location's area, and information about the chosen location. This will be accomplished using data from APIs the server will fetch and manage.
+I build an API server, that provides data for the City Explorer Application. It will allow a user to search for a location, present a map of the location's area, and information about the chosen location. This will be accomplished using data from APIs the server will fetch and manage. Recent search data will persist on the server using postgres database.
 
 ## Getting Started
 
@@ -12,7 +12,7 @@ Open the City Explorer site using https://city-explorer-app-wm.herokuapp.com as 
 
 ## Architecture
 
-The server is constructed using Node.js
+The server is constructed using Node.js, Express, Postgres, superagent. It has been deployed via Heroku.
 
 ## Change Log
 
@@ -31,6 +31,12 @@ The server is constructed using Node.js
 12-08-2020 5:15pm - /trail route callback created utilizing Trail API key and a new constructor function. It is now functional.
 
 12-08-2020 5:20pm - Function implemented to handle errors from any API calls.
+
+12-09-2020 2:50pm - Database has been successfully connected to the server.
+
+12-09-2020 3:30pm - Function created to check for requested location information in the database and retrieve it if it exists.
+
+12-09-2020 3:55pm - Database replicated on Heroku and deployed server is responding as planned.
 
 
 ## Credits and Collaborations
