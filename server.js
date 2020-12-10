@@ -8,6 +8,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DATABASE_URL = process.env.DATABASE_URL;
+const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
+const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
 
 const client = new pg.Client(DATABASE_URL);
 client.on('error', error => console.error(error));
@@ -33,7 +36,6 @@ function getLocation(req, res){
       if(data.rowCount > 0){
         res.send(data.rows[0]);
       } else {
-        const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
         let urlLocation = `https://us1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${req.query.city}&format=json`;
         superagent.get(urlLocation).then(locationData => {
           const gpsData = locationData.body;
@@ -57,7 +59,6 @@ function GpsData(gpsObj, query){
 }
 
 function getWeather(req, res){
-  const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
   let urlWeather = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${req.query.latitude}&lon=${req.query.longitude}&key=${WEATHER_API_KEY}&days=8`;
   superagent.get(urlWeather).then(weatherInfo => {
     const weatherData = weatherInfo.body;
@@ -74,7 +75,6 @@ function WeatherData(weatherObj){
 }
 
 function getTrails(req, res){
-  const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
   let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=25&key=${TRAIL_API_KEY}`;
   superagent.get(urlTrail).then(returnedData => {
     const trailData = returnedData.body.trails;
