@@ -18,7 +18,16 @@ app.use(cors());
 
 // routes
 
-app.get('/location', function(req, res){
+app.get('/location', getLocation);
+
+app.get('/weather', getWeather);
+
+app.get('/trails', getTrails);
+
+// callback functions
+
+
+function getLocation(req, res){
   client.query('SELECT * FROM location WHERE search_query = $1', [req.query.city])
     .then(data => {
       if(data.rowCount > 0){
@@ -26,8 +35,8 @@ app.get('/location', function(req, res){
       } else {
         const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
         let urlLocation = `https://us1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${req.query.city}&format=json`;
-        superagent.get(urlLocation).then(whatComesBack => {
-          const gpsData = whatComesBack.body;
+        superagent.get(urlLocation).then(locationData => {
+          const gpsData = locationData.body;
           const instanceOfGpsData = new GpsData(gpsData[0], req.query.city);
 
           client.query('INSERT INTO location (search_query, formatted_query, latitude, longitude) VALUES($1, $2, $3, $4)', [req.query.city, instanceOfGpsData.formatted_query, instanceOfGpsData.latitude, instanceOfGpsData.longitude])
@@ -38,21 +47,33 @@ app.get('/location', function(req, res){
 
       }
     });
-});
+}
 
-app.get('/weather', function(req, res){
+function GpsData(gpsObj, query){
+  this.latitude = gpsObj.lat;
+  this.longitude = gpsObj.lon;
+  this.formatted_query = gpsObj.display_name;
+  this.search_query = query;
+}
+
+function getWeather(req, res){
   const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
   let urlWeather = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${req.query.latitude}&lon=${req.query.longitude}&key=${WEATHER_API_KEY}&days=8`;
-  superagent.get(urlWeather).then(whatComesBack => {
-    const weatherData = whatComesBack.body;
-    const weatherArray = weatherData.data.map(function(daysWeather) {
-      return new WeatherData(daysWeather);
+  superagent.get(urlWeather).then(weatherInfo => {
+    const weatherData = weatherInfo.body;
+    const weatherArray = weatherData.data.map(function(forecast) {
+      return new WeatherData(forecast);
     });
     res.send(weatherArray);
   }).catch(() => res.status(500).send('Sorry, something went wrong.'));
-});
+}
 
-app.get('/trails', function(req, res){
+function WeatherData(weatherObj){
+  this.time = weatherObj.datetime;
+  this.forecast = weatherObj.weather.description;
+}
+
+function getTrails(req, res){
   const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
   let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=25&key=${TRAIL_API_KEY}`;
   superagent.get(urlTrail).then(returnedData => {
@@ -62,21 +83,6 @@ app.get('/trails', function(req, res){
     });
     res.send(trailArray);
   }).catch(() => res.status(500).send('Sorry, something went wrong.'));
-});
-
-// callback functions
-
-
-function GpsData(gpsObj, query){
-  this.latitude = gpsObj.lat;
-  this.longitude = gpsObj.lon;
-  this.formatted_query = gpsObj.display_name;
-  this.search_query = query;
-}
-
-function WeatherData(weatherObj){
-  this.time = weatherObj.datetime;
-  this.forecast = weatherObj.weather.description;
 }
 
 function TrailData(trailObj){
