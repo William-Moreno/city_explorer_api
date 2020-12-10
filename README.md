@@ -149,13 +149,13 @@ Actual time needed to complete: 35 minutes
 
 **3. Deploy: As a user, I want the application to perform quickly so that I can search for locations frequently and reliably.**
 
-Estimate of time needed to complete:
+Estimate of time needed to complete:  15 minutes
 
-Start time:
+Start time: 3:38pm
 
-Finish time:
+Finish time: 3:55pm
 
-Actual time needed to complete:
+Actual time needed to complete: 17 minutes
 
 **4. *STRETCH*: Server: As a user, I want the application to work with recent results, so that I can see info without the app doing unnecessary API calls.**
 
