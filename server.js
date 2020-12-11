@@ -97,23 +97,17 @@ function getMovies(req,res){
 }
 
 function getYelp(req, res){
-  let urlYelp = 'https://api.yelp.com/v3/businesses/search?location=san francisco&term=burrito';
-  res.send([
-    {
-      'name': 'Pike Place Chowder',
-      'image_url': 'https://s3-media3.fl.yelpcdn.com/bphoto/ijju-wYoRAxWjHPTCxyQGQ/o.jpg',
-      'price': '$$   ',
-      'rating': '4.5',
-      'url': 'https://www.yelp.com/biz/pike-place-chowder-seattle?adjust_creative=uK0rfzqjBmWNj6-d3ujNVA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=uK0rfzqjBmWNj6-d3ujNVA'
-    },
-    {
-      'name': 'Umi Sake House',
-      'image_url': 'https://s3-media3.fl.yelpcdn.com/bphoto/c-XwgpadB530bjPUAL7oFw/o.jpg',
-      'price': '$$   ',
-      'rating': '4.0',
-      'url': 'https://www.yelp.com/biz/umi-sake-house-seattle?adjust_creative=uK0rfzqjBmWNj6-d3ujNVA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=uK0rfzqjBmWNj6-d3ujNVA'
-    },
-  ]);
+  let urlYelp = `https://api.yelp.com/v3/businesses/search?location=${req.query.search_query}&limit=20`;
+  superagent.get(urlYelp).set('Authorization', `Bearer ${YELP_API_KEY}`)
+    .then(returnedData => {
+      const yelpData = returnedData.body.businesses;
+      const yelpArray = yelpData.map(function(yelp) {
+        return new YelpData(yelp);
+      });
+      console.log(yelpArray);
+      const firstFive = yelpArray.filter((val,idx) => idx < 5);
+      res.send(firstFive);
+    }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 }
 
 function GpsData(gpsObj, query){
@@ -149,6 +143,14 @@ function MovieData(obj){
   this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`;
   this.popularity = obj.popularity;
   this.released_on = obj.release_date;
+}
+
+function YelpData(obj){
+  this.name = obj.name;
+  this.image_url = obj.image_url;
+  this.price = obj.price;
+  this.rating = obj.rating;
+  this.url = obj.url;
 }
 
 // error handling and start server
