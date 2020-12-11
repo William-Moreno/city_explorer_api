@@ -97,16 +97,15 @@ function getMovies(req,res){
 }
 
 function getYelp(req, res){
-  let urlYelp = `https://api.yelp.com/v3/businesses/search?location=${req.query.search_query}&limit=20`;
+  let pageOffset = ((req.query.page-1)*5);
+  let urlYelp = `https://api.yelp.com/v3/businesses/search?location=${req.query.search_query}&term="restaurant"&limit=5&offset=${pageOffset}`;
   superagent.get(urlYelp).set('Authorization', `Bearer ${YELP_API_KEY}`)
     .then(returnedData => {
       const yelpData = returnedData.body.businesses;
       const yelpArray = yelpData.map(function(yelp) {
         return new YelpData(yelp);
       });
-      console.log(yelpArray);
-      const firstFive = yelpArray.filter((val,idx) => idx < 5);
-      res.send(firstFive);
+      res.send(yelpArray);
     }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 }
 
