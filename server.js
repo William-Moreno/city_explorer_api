@@ -11,6 +11,8 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
+const MOVIE_API_KEY = process.env.MOVIE_API_KEY;
+
 
 const client = new pg.Client(DATABASE_URL);
 client.on('error', error => console.error(error));
@@ -26,6 +28,9 @@ app.get('/location', getLocation);
 app.get('/weather', getWeather);
 
 app.get('/trails', getTrails);
+
+app.get('/movies', getMovies);
+
 
 // callback functions
 
@@ -51,13 +56,6 @@ function getLocation(req, res){
     });
 }
 
-function GpsData(gpsObj, query){
-  this.latitude = gpsObj.lat;
-  this.longitude = gpsObj.lon;
-  this.formatted_query = gpsObj.display_name;
-  this.search_query = query;
-}
-
 function getWeather(req, res){
   let urlWeather = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${req.query.latitude}&lon=${req.query.longitude}&key=${WEATHER_API_KEY}&days=8`;
   superagent.get(urlWeather).then(weatherInfo => {
@@ -69,11 +67,6 @@ function getWeather(req, res){
   }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 }
 
-function WeatherData(weatherObj){
-  this.time = weatherObj.datetime;
-  this.forecast = weatherObj.weather.description;
-}
-
 function getTrails(req, res){
   let urlTrail = `https://www.hikingproject.com/data/get-trails?lat=${req.query.latitude}&lon=${req.query.longitude}&maxDistance=25&key=${TRAIL_API_KEY}`;
   superagent.get(urlTrail).then(returnedData => {
@@ -83,6 +76,29 @@ function getTrails(req, res){
     });
     res.send(trailArray);
   }).catch(() => res.status(500).send('Sorry, something went wrong.'));
+}
+
+function getMovies(req,res){
+  let urlMovie = `https://api.themoviedb.org/3/search/movie?api_key=${MOVIE_API_KEY}&query=${req.query.search_query}`;
+  superagent.get(urlMovie).then(returnedData => {
+    const movieData = returnedData.body.results;
+    const movieArray = movieData.map(function(movie) {
+      return new MovieData(movie);
+    });
+    res.send(movieArray);
+  }).catch(() => res.status(500).send('Sorry, something went wrong.'));
+}
+
+function GpsData(gpsObj, query){
+  this.latitude = gpsObj.lat;
+  this.longitude = gpsObj.lon;
+  this.formatted_query = gpsObj.display_name;
+  this.search_query = query;
+}
+
+function WeatherData(weatherObj){
+  this.time = weatherObj.datetime;
+  this.forecast = weatherObj.weather.description;
 }
 
 function TrailData(trailObj){
@@ -98,6 +114,15 @@ function TrailData(trailObj){
   this.summary = trailObj.summary;
 }
 
+function MovieData(obj){
+  this.title = obj.title;
+  this.overview = obj.overview;
+  this.average_votes = obj.vote_average;
+  this.total_votes = obj.vote_count;
+  this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`;
+  this.popularity = obj.popularity;
+  this.released_on = obj.release_date;
+}
 
 // error handling and start server
 app.use('*', (request, response) => {
