@@ -53,10 +53,10 @@ function getLocation(req, res){
             .then(() =>{
               res.send(instanceOfGpsData);
             });
-        }).catch(() => res.status(500).send('Sorry, something went wrong.'));
+        });
 
       }
-    });
+    }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 }
 
 function getWeather(req, res){
