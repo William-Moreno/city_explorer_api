@@ -12,6 +12,7 @@ const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
 const MOVIE_API_KEY = process.env.MOVIE_API_KEY;
+const YELP_API_KEY = process.env.YELP_API_KEY;
 
 
 const client = new pg.Client(DATABASE_URL);
@@ -96,6 +97,7 @@ function getMovies(req,res){
 }
 
 function getYelp(req, res){
+  let urlYelp = 'https://api.yelp.com/v3/businesses/search?location=san francisco&term=burrito';
   res.send([
     {
       'name': 'Pike Place Chowder',
