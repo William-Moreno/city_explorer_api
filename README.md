@@ -38,6 +38,12 @@ The server is constructed using Node.js, Express, Postgres, superagent. It has b
 
 12-09-2020 3:55pm - Database replicated on Heroku and deployed server is responding as planned.
 
+12-10-2020 4:10pm - Movie API key applied and /movies route, callback and constructor created. Feature is functional on deployed page.
+
+12-10-2020 6:15pm - Yelp API key applied and /yelp route, callback and constructor created. Feature is functional on deployed page.
+
+12-10-2020 7:40pm - Pagination is now functional on deployed site. Yelp data is populated with the next 5 results when the "Load More..." button is clicked.
+
 
 ## Credits and Collaborations
 
@@ -172,3 +178,35 @@ Start time:
 Finish time:
 
 Actual time needed to complete:
+
+### Lab 09 SQL Continued
+
+**1. Movies: As a user, I want to request information about movies that are connected to the area, so that users can learn more about the location.**
+
+Estimate of time needed to complete:  30 minutes
+
+Start time: 3:00pm
+
+Finish time: 4:10pm
+
+Actual time needed to complete: 1 hour 10 minutes
+
+**2. Yelp: As a user, I want to request information about restaurants in the area so that users can view recommendations based on the search query.**
+
+Estimate of time needed to complete: 1 hour
+
+Start time: 4:20pm
+
+Finish time: 6:15pm
+
+Actual time needed to complete: 1 hour 55 minutes
+
+**3. Pagination**
+
+Estimate of time needed to complete:  30 minutes
+
+Start time: 6:35pm
+
+Finish time: 7:40pm
+
+Actual time needed to complete: 1 hour 5 minutes
