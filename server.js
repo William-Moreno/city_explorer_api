@@ -85,6 +85,10 @@ function getMovies(req,res){
     const movieArray = movieData.map(function(movie) {
       return new MovieData(movie);
     });
+    movieArray.sort((a, b) => b.popularity - a.popularity);
+    while(movieArray.length > 20) {
+      movieArray.pop();
+    }
     res.send(movieArray);
   }).catch(() => res.status(500).send('Sorry, something went wrong.'));
 }
