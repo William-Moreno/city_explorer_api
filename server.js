@@ -14,8 +14,8 @@ const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
 const MOVIE_API_KEY = process.env.MOVIE_API_KEY;
 const YELP_API_KEY = process.env.YELP_API_KEY;
 
-
 const client = new pg.Client(DATABASE_URL);
+
 client.on('error', error => console.error(error));
 
 
